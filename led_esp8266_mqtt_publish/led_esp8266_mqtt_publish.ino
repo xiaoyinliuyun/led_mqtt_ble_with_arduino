@@ -82,6 +82,38 @@ void sendCode(bool r, bool g, bool b, int i) {
   // high = high << 8;
   byte low = (byte)i;
 
+    // 待发布的信息H4L255
+
+  // 0100(0x0400 ~ 0x04FF), 0010(0x0200 ~0x02FF), 0001(0x0100 ~ 0x01FF)
+  // 确定发布的主题：
+  String topic = "sos";
+  char publishTopic[topic.length() + 1];
+  strcpy(publishTopic, topic.c_str());
+
+  char publishMessage[] = { 'H', high, 'L', low, 'A', '\0' };
+  
+
+  if (mqttClient.connected()) {
+
+    if (mqttClient.publish(publishTopic, publishMessage)) {
+      Serial.print("Topic: ");
+      Serial.println(publishTopic);
+      Serial.print("Message: ");
+      
+      String value = "H" + String(high) + "L" + String(low);
+      Serial.println(value);
+      Serial.println(publishMessage);
+    } else {
+      Serial.println("Publish Failed");
+    }
+
+    // 保持客户端心跳
+    mqttClient.loop();
+
+  } else {
+    connectMQTTServer();
+  }
+
   if (high == 0x04) {
     // 红色
     light(rLedPin, low);
@@ -97,37 +129,6 @@ void sendCode(bool r, bool g, bool b, int i) {
     light(rLedPin, 255);
     light(gLedPin, 255);
     light(bLedPin, low);
-  }
-
-  // 待发布的信息H4L255
-
-  // 0100(0x0400 ~ 0x04FF), 0010(0x0200 ~0x02FF), 0001(0x0100 ~ 0x01FF)
-  // 确定发布的主题：
-  String topic = "sos";
-  char publishTopic[topic.length() + 1];
-  strcpy(publishTopic, topic.c_str());
-
-  char publishMessage[] = { 'H', high, 'L', low, 'A', '\0' };
-  
-
-  if (mqttClient.connected()) {
-    // 保持客户端心跳
-    mqttClient.loop();
-
-    if (mqttClient.publish(publishTopic, publishMessage)) {
-      Serial.print("Topic: ");
-      Serial.println(publishTopic);
-      Serial.print("Message: ");
-      
-      String value = "H" + String(high) + "L" + String(low);
-      Serial.println(value);
-      Serial.println(publishMessage);
-    } else {
-      Serial.println("Publish Failed");
-    }
-
-  } else {
-    connectMQTTServer();
   }
 }
 
