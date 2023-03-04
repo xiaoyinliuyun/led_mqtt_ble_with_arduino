@@ -6,16 +6,16 @@ const int gLedPin = 5;  //引脚G
 const int bLedPin = 3;  //引脚B
 
 
-const int rLedPin2 = 11;  //引脚R
-const int gLedPin2 = 10;  //引脚G
-const int bLedPin2 = 9;   //引脚B
+// const int rLedPin2 = 11;  //引脚R
+// const int gLedPin2 = 10;  //引脚G
+// const int bLedPin2 = 9;   //引脚B
 
-const int btnPin = 2;  // 引脚2
+// const int btnPin = 2;  // 引脚2
 
 
-int ledR = 255;  //R Led 亮度
-int ledG = 255;  //G Led 亮度
-int ledB = 0;    //B Led 亮度
+// int ledR = 255;  //R Led 亮度
+// int ledG = 255;  //G Led 亮度
+// int ledB = 0;    //B Led 亮度
 
 void setup() {
   pinMode(rLedPin, OUTPUT);
@@ -27,43 +27,54 @@ void setup() {
   // pinMode(gLedPin2, OUTPUT);
   // pinMode(bLedPin2, OUTPUT);
 
-  pinMode(btnPin, INPUT_PULLUP);
+  // pinMode(btnPin, INPUT_PULLUP);
 
   Serial.begin(115200);
 }
 
 
-int delayTime = 1970;
+// int delayTime = 1970;
 
-void increase(bool r, bool g, bool b, bool r2, bool g2, bool b2) {
-  for (int i = 0; i < 256; i++) {
-    analogWrite(rLedPin, r ? i : 255);
-    analogWrite(gLedPin, g ? i : 255);
-    analogWrite(bLedPin, b ? i : 255);
+// void increase(bool r, bool g, bool b, bool r2, bool g2, bool b2) {
+//   for (int i = 0; i < 256; i++) {
+//     analogWrite(rLedPin, r ? i : 255);
+//     analogWrite(gLedPin, g ? i : 255);
+//     analogWrite(bLedPin, b ? i : 255);
 
-    analogWrite(rLedPin2, r2 ? i : 255);
-    analogWrite(gLedPin2, g2 ? i : 255);
-    analogWrite(bLedPin2, b2 ? i : 255);
+//     analogWrite(rLedPin2, r2 ? i : 255);
+//     analogWrite(gLedPin2, g2 ? i : 255);
+//     analogWrite(bLedPin2, b2 ? i : 255);
 
-    delayMicroseconds(delayTime);
-  }
-}
+//     delayMicroseconds(delayTime);
+//   }
+// }
 
-void decrease(bool r, bool g, bool b, bool r2, bool g2, bool b2) {
-  for (int i = 255; i >= 0; i--) {
-    analogWrite(rLedPin, r ? i : 255);
-    analogWrite(gLedPin, g ? i : 255);
-    analogWrite(bLedPin, b ? i : 255);
+// void decrease(bool r, bool g, bool b, bool r2, bool g2, bool b2) {
+//   for (int i = 255; i >= 0; i--) {
+//     analogWrite(rLedPin, r ? i : 255);
+//     analogWrite(gLedPin, g ? i : 255);
+//     analogWrite(bLedPin, b ? i : 255);
 
-    analogWrite(rLedPin2, r2 ? i : 255);
-    analogWrite(gLedPin2, g2 ? i : 255);
-    analogWrite(bLedPin2, b2 ? i : 255);
+//     analogWrite(rLedPin2, r2 ? i : 255);
+//     analogWrite(gLedPin2, g2 ? i : 255);
+//     analogWrite(bLedPin2, b2 ? i : 255);
 
-    delayMicroseconds(delayTime);
-  }
-}
+//     delayMicroseconds(delayTime);
+//   }
+// }
 
 void loop() {
+  // 有延时问题 :解决 https://blog.csdn.net/shenfuwang/article/details/80262216
+  // Serial.println(Serial.parseInt());
+  // Serial.readString();
+
+  // 没有延时问题
+  // Serial.read();
+
+  // while (Serial.available() > 0) {
+  //   // 不延时
+  //   Serial.println((char)Serial.read());
+  // }
   // 按钮
   // int value = digitalRead(btnPin);
   // decrease(true, false, false, false, true, false);
@@ -76,10 +87,10 @@ void loop() {
   // 注意：取值需要保证波特率相同
 
   // 取值方式1：
-  // if (Serial.available()){                      // 当串口接收到信息后
+  // if (Serial.available() > 0 ){                      // 当串口接收到信息后
   //   String serialData = Serial.readString();    // 将接收到的信息使用readString()存储于serialData变量
-  //   Serial.print("length: ");
-  //   Serial.println(serialData.length());
+  //   // Serial.print("length: ");
+  //   // Serial.println(serialData.length());
   //   Serial.println(serialData);                 // 以便查看serialData变量的信息
   // }
 
@@ -102,7 +113,6 @@ void loop() {
         break;
       case 'L':
         low = Serial.parseInt();
-
 
         String value = "H" + String(high) + "L" + String(low);
         Serial.println("BLE received to \"" + value + "\"");
@@ -141,6 +151,7 @@ void loop() {
     // light(gLedPin2, 255);
     // light(bLedPin2, low);
   }
+  // delay(1);
 }
 
 void light(int pin, int value) {

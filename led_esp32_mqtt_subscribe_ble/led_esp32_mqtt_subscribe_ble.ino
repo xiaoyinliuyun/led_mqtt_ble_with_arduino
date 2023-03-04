@@ -90,7 +90,7 @@ void receiveCallback(char* topic, byte* payload, unsigned int length) {
   byte low = (byte)payload[3];
 
   if (connect2BLEDevice) {
-    String value = "H" + String(high) + "L" + String(low);
+    String value = "H" + String(high) + "L" + String(low) + "A";
     bleRemoteCharacteristic->writeValue(value.c_str(), value.length());
     Serial.println("BLE send to \"" + value + "\"");
   }
