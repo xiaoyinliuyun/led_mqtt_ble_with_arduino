@@ -86,21 +86,13 @@ void subscribeTopic() {
 }
 
 void receiveCallback(char* topic, byte* payload, unsigned int length) {
-  byte high = payload[1];
-  byte low = payload[3];
-  
-  for(int i = 0; i<length; i++){
-    Serial.print((char)payload[i]);
-  }
-  Serial.println();
-
-
+  byte high = (byte)payload[1];
+  byte low = (byte)payload[3];
 
   if (connect2BLEDevice) {
     String value = "H" + String(high) + "L" + String(low);
-    Serial.print("BLE send: ");
-    Serial.println(value);
     bleRemoteCharacteristic->writeValue(value.c_str(), value.length());
+    Serial.println("BLE send to \"" + value + "\"");
   }
 
   if (high == 0x04) {
@@ -284,6 +276,4 @@ void loop() {
       connect2BLEDevice = true;
     }
   }
-
-  delay(1000);
 }

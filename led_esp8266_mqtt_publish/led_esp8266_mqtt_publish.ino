@@ -107,7 +107,7 @@ void sendCode(bool r, bool g, bool b, int i) {
   char publishTopic[topic.length() + 1];
   strcpy(publishTopic, topic.c_str());
 
-  char publishMessage[] = { 'H', high, 'L', i, '\0' };
+  char publishMessage[] = { 'H', high, 'L', low, 'A', '\0' };
   
 
   if (mqttClient.connected()) {
@@ -121,7 +121,7 @@ void sendCode(bool r, bool g, bool b, int i) {
       
       String value = "H" + String(high) + "L" + String(low);
       Serial.println(value);
-      // Serial.println(publishMessage);
+      Serial.println(publishMessage);
     } else {
       Serial.println("Publish Failed");
     }
@@ -132,10 +132,10 @@ void sendCode(bool r, bool g, bool b, int i) {
 }
 
 /**
- * 数值增大，亮度减弱
+ * 数值增大，亮度减弱  注意：i = 0x00时，没法正常传输，需要转义
  */
 void increase(bool r, bool g, bool b) {
-  for (int i = 0; i < 256; i += 256) {
+  for (int i = 1; i < 256; i += 255) {
     sendCode(r, g, b, i);
     delay(delayTime);
   }
@@ -145,7 +145,7 @@ void increase(bool r, bool g, bool b) {
  * 数值减小，亮度增强
  */
 void decrease(bool r, bool g, bool b) {
-  for (int i = 255; i >= 0; i -= 256) {
+  for (int i = 255; i > 0; i -= 255) {
     sendCode(r, g, b, i);
     delay(delayTime);
   }

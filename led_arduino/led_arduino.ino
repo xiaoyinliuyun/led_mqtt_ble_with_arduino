@@ -23,9 +23,9 @@ void setup() {
   pinMode(bLedPin, OUTPUT);
 
 
-  pinMode(rLedPin2, OUTPUT);
-  pinMode(gLedPin2, OUTPUT);
-  pinMode(bLedPin2, OUTPUT);
+  // pinMode(rLedPin2, OUTPUT);
+  // pinMode(gLedPin2, OUTPUT);
+  // pinMode(bLedPin2, OUTPUT);
 
   pinMode(btnPin, INPUT_PULLUP);
 
@@ -102,14 +102,13 @@ void loop() {
         break;
       case 'L':
         low = Serial.parseInt();
+
+
+        String value = "H" + String(high) + "L" + String(low);
+        Serial.println("BLE received to \"" + value + "\"");
         break;
     }
   }
-
-  String value = "H" + String(high) + "L" + String(low);
-
-  Serial.print("BLE receive: ");
-  Serial.println(value);
 
   if (high == 0x04) {
     // 红色
@@ -118,9 +117,9 @@ void loop() {
     light(bLedPin, 255);
 
 
-    light(rLedPin2, low);
-    light(gLedPin2, 255);
-    light(bLedPin2, 255);
+    // light(rLedPin2, low);
+    // light(gLedPin2, 255);
+    // light(bLedPin2, 255);
   } else if (high == 0x02) {
     // 绿色
     light(rLedPin, 255);
@@ -128,9 +127,9 @@ void loop() {
     light(bLedPin, 255);
 
 
-    light(rLedPin2, 255);
-    light(gLedPin2, low);
-    light(bLedPin2, 255);
+    // light(rLedPin2, 255);
+    // light(gLedPin2, low);
+    // light(bLedPin2, 255);
   } else if (high == 0x01) {
     // 蓝色
     light(rLedPin, 255);
@@ -138,9 +137,9 @@ void loop() {
     light(bLedPin, low);
 
 
-    light(rLedPin2, 255);
-    light(gLedPin2, 255);
-    light(bLedPin2, low);
+    // light(rLedPin2, 255);
+    // light(gLedPin2, 255);
+    // light(bLedPin2, low);
   }
 }
 
