@@ -107,8 +107,8 @@ void sendCode(bool r, bool g, bool b, int i) {
       Serial.println("Publish Failed");
     }
 
-    // 保持客户端心跳
-    mqttClient.loop();
+    // 保持客户端心跳，如果一直有发布消息，就不用loop() 发送心跳信息
+    // mqttClient.loop();
 
   } else {
     connectMQTTServer();
