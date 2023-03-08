@@ -15,7 +15,24 @@
 
 简述：每个开发板连接一个RGB LED灯，在ESP8266控制自己连接的LED闪烁的通知发布led闪烁的指令，通过mqtt协议发布到iot公共服务端(然也物联)，ESP32订阅相应的主题，接收ESP8266发布的信息，控制ESP32自己的LED闪烁，同时通过BLE发送收的的指令给连接到Arduino上的HC-08(BLE模块)，HC-08通过串口连接到Arduino，控制板上的LED闪烁。
 
+<!-- <iframe height="100%" width="100%" src="/assets/audio/connected.mp4" ></iframe> -->
+
 <video src="/assets/audio/connected.mp4" position= "absolute" width="100%" height="100%" controls="controls"></video>
+
+<!-- <video controls="controls" >
+    <source id="mp4" src="/assets/audio/connected.mp4" type="video/mp4">
+</video> -->
+<!-- 
+<iframe 
+src="/assets/audio/connected.mp4" 
+scrolling="no"
+frameborder="no" 
+framespacing="0" 
+allowfullscreen="true" 
+height="100%" 
+width="100%"> 
+</iframe> -->
+
 
 ***
 <br>
