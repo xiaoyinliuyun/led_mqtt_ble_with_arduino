@@ -1,7 +1,7 @@
 ## 目标
 <br>
 
-尝试利用MQTT协议和BLE来联通不同的开发板模块，巩固[太极创客](www.taichi-maker.com)的学习
+尝试利用MQTT协议和BLE来联通不同的开发板模块，巩固[太极创客](http://www.taichi-maker.com)的学习
 
 ***
 <br>
